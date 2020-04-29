@@ -93,27 +93,26 @@ $(document).ready(function () {
         }
 
     })
-    function callingProducts(category_id) {
+
+    function filterByCategory(category_id) {
         $.ajax({
             url: 'http://35.225.243.133/api/products/',
             method: 'GET',
             success: function (response) {
                 document.querySelector('.parent_of_all_cards').innerHTML = '';
                 for (let product of response) {
-                    console.log(typeof category_id!=='undefined');
-                    if (typeof category_id!=='undefined' && category_id === product.category.id) {
-                        addingProducts(product);
-                        console.log('if');
-                        console.log(product);
+                    if (typeof category_id !== 'undefined') {
+                        if (category_id === product.category.id) {
+                            addingProducts(product);
+                        }
                     } else {
                         addingProducts(product);
-                        console.log('else');
-                        console.log(product);
                     }
                 }
             }
         })
     }
+    
     function addingProducts(product) {
         let card_of_product = document.createElement('div');
         card_of_product.setAttribute('product_id', product.id)
@@ -179,11 +178,8 @@ $(document).ready(function () {
 
 
     }
-    callingProducts();
-    console.log('fa');
-    function filterByCategory(category_id) {
-        callingProducts(category_id);
-    }
+
+    filterByCategory();
 })
 
 
